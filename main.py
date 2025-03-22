@@ -1,5 +1,4 @@
 import os
-from PyPDF2 import PdfReader
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -12,8 +11,22 @@ def hello_world():
 
 @app.route('/files', methods=['POST'])
 def file_parser():
-    data = request.files['file']
-    return {data.filename}
+    try:
+        if 'file' not in request.files:
+            return {"error": "No file part in the request"}, 400
+            
+        file = request.files['file']
+        
+        if file.filename == '':
+            return {"error": "No file selected"}, 400
+            
+        # Do whatever you need with the file here
+        # For now, just return the filename as you were doing
+        return {"filename": file.filename}, 200
+        
+    except Exception as e:
+        app.logger.error(f"Error processing file: {str(e)}")
+        return {"error": f"File processing error: {str(e)}"}, 500
 
 
 if __name__ == "__main__":
