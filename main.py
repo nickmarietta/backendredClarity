@@ -12,8 +12,8 @@ def hello_world():
 
 @app.route('/files', methods=['POST'])
 def file_parser():
-    data = request.body
-    return data
+    data = request.files['file']
+    return {data.filename}
 
 
 if __name__ == "__main__":
