@@ -29,7 +29,7 @@ def file_parser():
         app.logger.error(f"Error processing file: {str(e)}")
         return {"error": f"File processing error: {str(e)}"}, 500
 
-@app.rout('/parse', methods={'POST'})
+@app.route('/parse', methods={'POST'})
 def parsing_file():
     try:
         
