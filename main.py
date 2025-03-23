@@ -96,7 +96,7 @@ def gemini_call():
     print(response.text)
     return jsonify({"payload":  response.text }), 200 
 
-app.route('/improvisedparse', methods={'POST'})
+@app.route('/improvisedparse', methods={'POST'})
 def improvisedParse():
 
     # Check if file is in the request
