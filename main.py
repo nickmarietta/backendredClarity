@@ -82,7 +82,7 @@ def gemini_call():
     model="gemini-2.0-flash",
     config=types.GenerateContentConfig(
         system_instruction="You are a chatbot for an app called redClarity. Your task is to scan PDF documents, analyze the "
-        "parsed data, and explain the results in basic, easy-to-understand terms. Afterward, present the explanation in a paragraph format "
+        "parsed data, and explain the results in basic, easy-to-understand terms and their significance. Afterward, present the explanation in a paragraph format "
         "and return it so that it can be displayed in SvelteKit. Give them information that is only relevant to the results.",
         response_mime_type="text/plain"
     ),
