@@ -64,7 +64,7 @@ def gemini_call():
     response = client.models.generate_content(
         model="gemini-2.0-flash",
         config=types.GenerateContentConfig(
-            system_instruction="This person has received their lab results from a blood test, please give them a summary of what these results mean in 4th grade terms."
+            system_instruction="say hi who."
         ),
         contents="Hello there"
     )
