@@ -42,7 +42,7 @@ def parsing_file():
         if file.filename == '':
             return {"error": "No file selected"}, 400
 
-        reader = PdfReader("EXAMPLEBLOODTEST.pdf")
+        reader = PdfReader(file)
 
         page = reader.pages[0]
 
