@@ -101,6 +101,38 @@ def translateToSpanish():
     
     return jsonify({'translated_text': result['translatedText']})
 
+@app.route('/english', methods={'POST'})
+def translateToEnglish():
+    data = request.get_json()
+    if 'text' not in data:
+        return jsonify({'error': 'Missing text field'}), 400
+    
+    text = data['text']
+    result = translate_client.translate(text, target_language='en')
+    
+    return jsonify({'translated_text': result['translatedText']})
+
+@app.route('/french', methods={'POST'})
+def translateToFrench():
+    data = request.get_json()
+    if 'text' not in data:
+        return jsonify({'error': 'Missing text field'}), 400
+    
+    text = data['text']
+    result = translate_client.translate(text, target_language='fr')
+    
+    return jsonify({'translated_text': result['translatedText']})
+
+@app.route('/vietnamese', methods={'POST'})
+def translateToVietnamese():
+    data = request.get_json()
+    if 'text' not in data:
+        return jsonify({'error': 'Missing text field'}), 400
+    
+    text = data['text']
+    result = translate_client.translate(text, target_language='vi')
+    
+    return jsonify({'translated_text': result['translatedText']})
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
