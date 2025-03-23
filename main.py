@@ -81,7 +81,8 @@ def gemini_call():
     response = client.models.generate_content(
     model="gemini-2.0-flash",
     config=types.GenerateContentConfig(
-        system_instruction="These are the results from a blood test, could you filter all of the /n and give a basic summary of what the results mean in basic terminology.",
+        system_instruction="**RESPONSIBILITY: You are a chatbot for an app called redClarity "
+        "that takes pdf documents and scans them. You are to scan through the parsed data and then explain the results from the test to them in basic terms.",
         response_mime_type="text/plain"
     ),
     contents=stringResult[1]
