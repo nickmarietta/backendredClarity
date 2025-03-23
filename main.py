@@ -57,16 +57,32 @@ def parsing_file():
         app.logger.error(f"Error processing file: {str(e)}")
         return {"error": f"File processing error: {str(e)}"}, 500
     
-@app.route('/gemini', methods={'GET'})
-def gemini_call():
+@app.route('/gemini', methods={'POST'})
+def gemini_call(): 
+    if 'file' not in request.files:
+        return {"error": "No file part in the request"}, 400
+
+    file = request.files['file']
+    
+
+    if file.filename == '':
+        return {"error": "No file selected"}, 400
+
+    reader = PdfReader(file)
+
+    page = reader.pages[0]
+
+    randomString = page.extract_text()
+    stringResult = randomString.split("COMPREHENSIVE METABOLIC PANEL")
+
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
     response = client.models.generate_content(
         model="gemini-2.0-flash",
         config=types.GenerateContentConfig(
-            system_instruction="say hi who."
+            system_instruction="These are the results from a blood test, could you filter all of the /n and give a basic summary of what the results mean (explain like im a 4th grader)."
         ),
-        contents="Hello there"
+        contents=stringResult[1]
     )
 
     print(response.text)
