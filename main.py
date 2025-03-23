@@ -88,9 +88,19 @@ def gemini_call():
     ),
     contents=stringResult[1]
 )
+    questions = client.models.generate_content(
+    model="gemini-2.0-flash",
+    config=types.GenerateContentConfig(
+        system_instruction="**RESPONSIBILITY: With the data from the results, what are some questions that this patient "
+        "might want to ask their physician/doctor? Give them some basic questions that would give them more insight on their "
+        "conditions. If they are generally healthy, give 2 questions but in general, don't give more than 4.",
+        response_mime_type="text/plain"
+    ),
+    contents=stringResult[1]
+)
 
     print(response.text)
-    return jsonify({"payload":  response.text }), 200 
+    return jsonify({"payload":  response.text }, {"questions": questions.text}), 200 
 
 @app.route('/spanish', methods={'POST'})
 def translateToSpanish():
@@ -101,7 +111,7 @@ def translateToSpanish():
     text = data['text']
     result = translate_client.translate(text, target_language='es')
     
-    return jsonify({'translated_text': result['translatedText']})
+    return jsonify({'translated_text': result['translatedText']}), 200
 
 @app.route('/english', methods={'POST'})
 def translateToEnglish():
@@ -112,7 +122,7 @@ def translateToEnglish():
     text = data['text']
     result = translate_client.translate(text, target_language='en')
     
-    return jsonify({'translated_text': result['translatedText']})
+    return jsonify({'translated_text': result['translatedText']}), 200
 
 @app.route('/french', methods={'POST'})
 def translateToFrench():
@@ -123,7 +133,7 @@ def translateToFrench():
     text = data['text']
     result = translate_client.translate(text, target_language='fr')
     
-    return jsonify({'translated_text': result['translatedText']})
+    return jsonify({'translated_text': result['translatedText']}), 200
 
 @app.route('/vietnamese', methods={'POST'})
 def translateToVietnamese():
@@ -134,7 +144,7 @@ def translateToVietnamese():
     text = data['text']
     result = translate_client.translate(text, target_language='vi')
     
-    return jsonify({'translated_text': result['translatedText']})
+    return jsonify({'translated_text': result['translatedText']}), 200
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
