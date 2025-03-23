@@ -59,7 +59,7 @@ def parsing_file():
     
 @app.route('/gemini', methods={'POST'})
 def gemini_call():
-    client = genai.Client(api_key="GEMINI_API_KEY")
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
     response = client.models.generate_content(
         model="gemini-2.0-flash",
