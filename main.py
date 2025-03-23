@@ -64,11 +64,13 @@ def gemini_call():
     response = client.models.generate_content(
         model="gemini-2.0-flash",
         config=types.GenerateContentConfig(
-            system_instruction="This person has receieved their lab results from a blood test, please give them a summary of what these results mean in 4th grade terms."),
+            system_instruction="This person has received their lab results from a blood test, please give them a summary of what these results mean in 4th grade terms."
+        ),
         contents="Hello there"
     )
 
     print(response.text)
+    return response.text
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
