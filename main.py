@@ -57,7 +57,7 @@ def parsing_file():
         app.logger.error(f"Error processing file: {str(e)}")
         return {"error": f"File processing error: {str(e)}"}, 500
     
-@app.route('/gemini', methods={'POST'})
+@app.route('/gemini', methods={'GET'})
 def gemini_call():
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
@@ -70,7 +70,7 @@ def gemini_call():
     )
 
     print(response.text)
-    return response.text, 200
+    return jsonify({"payload":  response.text }), 200 
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
