@@ -83,7 +83,7 @@ def gemini_call():
     config=types.GenerateContentConfig(
         system_instruction="You are a chatbot for an app called redClarity. Your task is to scan PDF documents, analyze the "
         "parsed data, and explain the results in basic, easy-to-understand terms. Afterward, present the explanation in a bullet "
-        "point format and return it in a plain text (.txt) format.",
+        "point format and return it in a plain text (.txt) format. I do not want there to be any *'s in the return, but HTML format would be fine.",
         response_mime_type="text/plain"
     ),
     contents=stringResult[1]
