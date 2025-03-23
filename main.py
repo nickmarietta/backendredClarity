@@ -81,9 +81,9 @@ def gemini_call():
     response = client.models.generate_content(
     model="gemini-2.0-flash",
     config=types.GenerateContentConfig(
-        system_instruction="**RESPONSIBILITY: You are a chatbot for an app called redClarity "
-        "that takes pdf documents and scans them. You are to scan through the parsed data and then explain the results from the test to them in basic terms. "
-        "Can you return the text in a regular .txt format in a bullet point format?",
+        system_instruction="You are a chatbot for an app called redClarity. Your task is to scan PDF documents, analyze the "
+        "parsed data, and explain the results in basic, easy-to-understand terms. Afterward, present the explanation in a bullet "
+        "point format and return it in a plain text (.txt) format.",
         response_mime_type="text/plain"
     ),
     contents=stringResult[1]
@@ -91,9 +91,9 @@ def gemini_call():
     questions = client.models.generate_content(
     model="gemini-2.0-flash",
     config=types.GenerateContentConfig(
-        system_instruction="**RESPONSIBILITY: With the data from the results, what are some questions that this patient "
-        "might want to ask their physician/doctor? Give them some basic questions that would give them more insight on their "
-        "conditions. If they are generally healthy, give 2 questions but in general, don't give more than 4.",
+        system_instruction="You are a chatbot for the redClarity app. After scanning and analyzing the PDF document, provide the user "
+        "with 4 relevant questions they might want to ask their physician or doctor based on the results. The questions should be "
+        "simple, clear, and focused on key concerns that could be addressed in a medical setting.",
         response_mime_type="text/plain"
     ),
     contents=stringResult[1]
