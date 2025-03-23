@@ -4,9 +4,11 @@ from PyPDF2 import PdfReader
 from google import genai
 from google.genai import types
 from flask_cors import CORS
+from google.cloud import translate_v2 as translate
 
 app = Flask(__name__)
 CORS(app)
+translate_client = translate.Client()
 
 @app.route("/", methods={"GET"})
 def hello_world():
@@ -86,6 +88,18 @@ def gemini_call():
 
     print(response.text)
     return jsonify({"payload":  response.text }), 200 
+
+@app.route('/spanish', methods={'POST'})
+def translateToSpanish():
+    data = request.get_json()
+    if 'text' not in data:
+        return jsonify({'error': 'Missing text field'}), 400
+    
+    text = data['text']
+    result = translate_client.translate(text, target_language='es')
+    
+    return jsonify({'translated_text': result['translatedText']})
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
