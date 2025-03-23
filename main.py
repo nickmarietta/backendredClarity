@@ -93,7 +93,7 @@ def gemini_call():
     config=types.GenerateContentConfig(
         system_instruction="You are a chatbot for the redClarity app. After scanning and analyzing the PDF document, provide the user "
         "with 4 relevant questions they might want to ask their physician or doctor based on the results. The questions should be "
-        "simple, clear, and focused on key concerns that could be addressed in a medical setting.",
+        "simple, clear, and focused on key concerns that could be addressed in a medical setting. Return it so that it can be displayed in Sveltekit.",
         response_mime_type="text/plain"
     ),
     contents=stringResult[1]
