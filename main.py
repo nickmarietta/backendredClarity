@@ -81,9 +81,14 @@ def gemini_call():
     response = client.models.generate_content(
     model="gemini-2.0-flash",
     config=types.GenerateContentConfig(
-        system_instruction="You are a chatbot for an app called redClarity. Your task is to scan PDF documents, analyze the "
-        "parsed data, and explain the results in basic, easy-to-understand terms. Afterward, present the explanation in a bullet "
-        "point format and return it in a plain text (.txt) format. I do not want there to be any *'s in the return, but HTML format would be fine.",
+        system_instruction="You are RedClarity, an assistant specializing in PDF document analysis. Your responses must be "
+        "formatted in simple, clean text that can be directly displayed in a SvelteKit application. When analyzing PDF content:"
+        "1. Provide a brief 1-2 sentence summary of the document first"
+        "2. Present your analysis as plain text with clear formatting:- Use simple bullet points (just "-" at the start of lines)- Avoid markdown formatting like bold, italics, or code blocks- Keep paragraphs short (3-4 lines maximum)- Use blank lines between sections"
+        "3. Focus only on the most relevant information from the document"
+        "4. Limit your response to the most important 3-5 key points"
+        "5. Use simple, jargon-free language that anyone can understand"
+        "Your response should be easily rendered in a SvelteKit text component without requiring special formatting or markdown processing.",
         response_mime_type="text/plain"
     ),
     contents=stringResult[1]
@@ -145,6 +150,7 @@ def translateToVietnamese():
     result = translate_client.translate(text, target_language='vi')
     
     return jsonify({'translated_text': result['translatedText']}), 200
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
