@@ -79,12 +79,13 @@ def gemini_call():
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        config=types.GenerateContentConfig(
-            system_instruction="These are the results from a blood test, could you filter all of the /n and give a basic summary of what the results mean (explain like im a 4th grader)."
-        ),
-        contents=stringResult[1]
-    )
+    model="gemini-2.0-flash",
+    config=types.GenerateContentConfig(
+        system_instruction="These are the results from a blood test, could you filter all of the /n and give a basic summary of what the results mean in basic terminology.",
+        response_mime_type="text/plain"
+    ),
+    contents=stringResult[1]
+)
 
     print(response.text)
     return jsonify({"payload":  response.text }), 200 
