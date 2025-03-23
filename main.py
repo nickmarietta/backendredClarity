@@ -82,7 +82,8 @@ def gemini_call():
     model="gemini-2.0-flash",
     config=types.GenerateContentConfig(
         system_instruction="**RESPONSIBILITY: You are a chatbot for an app called redClarity "
-        "that takes pdf documents and scans them. You are to scan through the parsed data and then explain the results from the test to them in basic terms.",
+        "that takes pdf documents and scans them. You are to scan through the parsed data and then explain the results from the test to them in basic terms. "
+        "Can you return the text in a regular .txt format in a bullet point format?",
         response_mime_type="text/plain"
     ),
     contents=stringResult[1]
