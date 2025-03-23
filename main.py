@@ -1,5 +1,5 @@
 import os, json
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from PyPDF2 import PdfReader
 
 app = Flask(__name__)
@@ -49,7 +49,7 @@ def parsing_file():
         randomString = page.extract_text()
         stringResult = randomString.split("COMPREHENSIVE METABOLIC PANEL")
         print(stringResult[1])
-        return {stringResult[1]}, 200
+        return jsonify({"payload":  stringResult[1] }), 200 
         
     except Exception as e:
         app.logger.error(f"Error processing file: {str(e)}")
