@@ -1,6 +1,8 @@
 import os, json
 from flask import Flask, request, jsonify
 from PyPDF2 import PdfReader
+from google import genai
+from google.genai import types
 
 app = Flask(__name__)
 
@@ -54,6 +56,19 @@ def parsing_file():
     except Exception as e:
         app.logger.error(f"Error processing file: {str(e)}")
         return {"error": f"File processing error: {str(e)}"}, 500
+    
+@app.route('/gemini', methods={'POST'})
+def gemini_call():
+    client = genai.Client(api_key="GEMINI_API_KEY")
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        config=types.GenerateContentConfig(
+            system_instruction="This person has receieved their lab results from a blood test, please give them a summary of what these results mean in 4th grade terms."),
+        contents="Hello there"
+    )
+
+    print(response.text)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
